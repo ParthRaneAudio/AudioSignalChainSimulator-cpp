@@ -19,15 +19,15 @@ Each stage processes the output of the previous one, modelling a typical gain-st
 
 ## Stages
 
-**Noise Gate: ** Silences any signal below a user-defined threshold. Models the behaviour of a gate used to eliminate low-level noise or bleed between signals.
+**Noise Gate:** Silences any signal below a user-defined threshold. Models the behaviour of a gate used to eliminate low-level noise or bleed between signals.
 
-**Compressor: ** Reduces the dynamic range of signals that exceed a threshold, applying a user-defined ratio. Implements the standard `threshold + (input - threshold) / ratio` gain reduction formula.
+**Compressor:** Reduces the dynamic range of signals that exceed a threshold, applying a user-defined ratio. Implements the standard `threshold + (input - threshold) / ratio` gain reduction formula.
 
-**Low Shelf EQ: ** Applies a gain boost or cut to the signal using a simplified shelf model. Demonstrates the dB-to-linear conversion (`pow(10.0, gainDb / 20.0)`) used in real audio gain calculations.
+**Low Shelf EQ:** Applies a gain boost or cut to the signal using a simplified shelf model. Demonstrates the dB-to-linear conversion (`pow(10.0, gainDb / 20.0)`) used in real audio gain calculations.
 
-**Limiter: ** Hard clips the signal at a user-defined ceiling, handling both positive and negative signal boundaries. Models a brick-wall limiter used to prevent clipping at the output stage.
+**Limiter:** Hard clips the signal at a user-defined ceiling, handling both positive and negative signal boundaries. Models a brick-wall limiter used to prevent clipping at the output stage.
 
-**Output Report: ** Converts final linear amplitude to dB and prints a full chain summary including which stages were active.
+**Output Report:** Converts final linear amplitude to dB and prints a full chain summary including which stages were active.
 
 ---
 
