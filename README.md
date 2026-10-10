@@ -16,15 +16,15 @@ Each stage processes the output of the previous one sample by sample, modelling 
 
 ## Stages
 
-**Noise Gate** — Silences any sample below a user-defined threshold. Models hard gating behaviour used to eliminate low-level noise or bleed between signals.
+**Noise Gate** : Silences any sample below a user-defined threshold. Models hard gating behaviour used to eliminate low-level noise or bleed between signals.
 
-**Compressor** — Reduces dynamic range of samples exceeding a threshold, applying a user-defined ratio. Implements the standard gain reduction formula: `threshold + (input - threshold) / ratio`.
+**Compressor** : Reduces dynamic range of samples exceeding a threshold, applying a user-defined ratio. Implements the standard gain reduction formula: `threshold + (input - threshold) / ratio`.
 
-**Low Shelf EQ** — Applies a flat gain boost or cut using the dB-to-linear conversion `pow(10.0, gainDb / 20.0)`. Currently a simplified gain model — biquad filter implementation planned.
+**Low Shelf EQ** : Applies a flat gain boost or cut using the dB-to-linear conversion `pow(10.0, gainDb / 20.0)`. Currently a simplified gain model — biquad filter implementation planned.
 
-**Limiter** — Hard clips at a user-defined ceiling, handling both positive and negative signal boundaries. Models a brick-wall limiter used to prevent clipping at the output stage.
+**Limiter** : Hard clips at a user-defined ceiling, handling both positive and negative signal boundaries. Models a brick-wall limiter used to prevent clipping at the output stage.
 
-**Output** — Writes the processed sample buffer back to a WAV file using libsndfile, preserving the original sample rate, channel count, and format.
+**Output** : Writes the processed sample buffer back to a WAV file using libsndfile, preserving the original sample rate, channel count, and format.
 
 ---
 
