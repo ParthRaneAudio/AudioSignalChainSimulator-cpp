@@ -2,9 +2,7 @@
 
 #ifndef SIGNAL_CHAIN_H
 #define SIGNAL_CHAIN_H
-#include <iostream>
-#include <cmath>
-#include <string>
+#include <string_view>
 
 //constexpr variables for signal processing
 constexpr double maxSignalLevel{ 1.0 };

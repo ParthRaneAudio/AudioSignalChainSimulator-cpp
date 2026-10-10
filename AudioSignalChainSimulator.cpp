@@ -4,20 +4,23 @@
 
 #include <iostream>
 #include <cmath>
-#include "signal_chain.h"
 #include <string>
+#include <vector>
+#include <sndfile.h>
+#include "signal_chain.h"
+#include "audio_io.h"
 
 int main()
 {
-	double inputSignalLevel_User{}; // User input for the input signal level
-	std::cout << "Enter the input signal level (between 0.0 and 1.0): " << "\n";
-	std::cin >> inputSignalLevel_User;
-	if (inputSignalLevel_User > 1.0 || inputSignalLevel_User < 0.0)
-	{
-		std::cout << "Invalid input signal level. Please enter a value between 0.0 and 1.0." << "\n";
-		return 1; // Exit the program with an error code
-	}
+	std::string inputFilePath; // User input for the audio file path
+	std::cout << "Enter the path to the audio file: " << "\n";
+	std::getline(std::cin >> std::ws, inputFilePath);
 
+	std::string outputFilePath; // User input for the output audio file path
+	std::cout << "Enter the path for the output audio file: " << "\n";
+	std::getline(std::cin >> std::ws, outputFilePath);
+
+	//Signal Chain Parameters
 	double gateThreshold_User{}; // User input for the noise gate threshold
 	std::cout << "Enter the gate threshold: " << "\n";
 	std::cin >> gateThreshold_User;
@@ -52,30 +55,32 @@ int main()
 	std::cout << "Enter the limiter threshold: " << "\n";
 	std::cin >> limiterThreshold_User;
 
-	std::cout << "=== AUDIO SIGNAL CHAIN ===" << "\n"; 
+	//Load WAV file
+	SF_INFO fileInfo{};
+	std::vector<double> buffer;
 
-	//Process the signal through the chain
-	double signalLevelAfterNoiseGate{ applyNoiseGate(inputSignalLevel_User, gateThreshold_User) };
-	printStageReport("Noise Gate", inputSignalLevel_User, signalLevelAfterNoiseGate);
-	bool isSignalMuted{ signalLevelAfterNoiseGate == 0.0 };
+	if (!loadWav(inputFilePath, buffer, fileInfo))
+	{
+		std::cout << "Failed to load file, Exiting." << "\n"; 
+		return 1;
+	}
 
-	double signalLevelAfterCompressor{ applyCompressor(signalLevelAfterNoiseGate, compressorThreshold_User, compressorRatio_User) };
-	printStageReport("Compressor", signalLevelAfterNoiseGate, signalLevelAfterCompressor);
-	bool isSignalCompressed{ signalLevelAfterCompressor < signalLevelAfterNoiseGate };
+	std::cout << "Format: " << fileInfo.format << "\n";
+	std::cout << "Sample rate: " << fileInfo.samplerate << "\n";
+	std::cout << "Channels: " << fileInfo.channels << "\n";
 
-	double signalLevelAfterEQ{ applyLowShelfEQ(signalLevelAfterCompressor, eqGain_User, eqFrequency_User) };
-	printStageReport("EQ", signalLevelAfterCompressor, signalLevelAfterEQ);
+	// Process buffer through signal chain
+	std::cout << "Processing " << buffer.size() << " samples..." << "\n";
+	processBuffer(buffer, gateThreshold_User, compressorThreshold_User, compressorRatio_User, eqGain_User, eqFrequency_User, limiterThreshold_User);
 
-	double signalLevelAfterLimiter{ applyLimiter(signalLevelAfterEQ, limiterThreshold_User) };
-	printStageReport("Limiter", signalLevelAfterEQ, signalLevelAfterLimiter);
-	bool isSignalLimited{ signalLevelAfterLimiter != signalLevelAfterEQ };
+	// Save output WAV
+	if (!saveWav(outputFilePath, buffer, fileInfo))
+	{
+		std::cout << "Failed to save file.\n";
+		return 1;
+	}
 
-	double inputSignalLevelDb{ linearToDb(inputSignalLevel_User) };
-	double finalOutputLevelDb{ linearToDb(signalLevelAfterLimiter) };
-	
-	// Print the final report
-	printFinalReport(inputSignalLevelDb, finalOutputLevelDb, isSignalMuted, isSignalCompressed, isSignalLimited);
-	
+	std::cout << "Done. Output written to: " << outputFilePath << "\n";
 
 	return 0;
 }

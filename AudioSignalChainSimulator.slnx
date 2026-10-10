@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="AudioSignalChainSimulator.vcxproj" />
+  <Project Path="AudioSignalChainSimulator.vcxproj" Id="40665035-6a47-45ca-8f42-cebfb7db0cfe" />
 </Solution>

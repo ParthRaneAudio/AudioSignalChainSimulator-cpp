@@ -4,7 +4,10 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <vector>
+#include <sndfile.h>
 #include "signal_chain.h"
+#include "audio_io.h"
 
 // Function definitions for the signal processing chain
 

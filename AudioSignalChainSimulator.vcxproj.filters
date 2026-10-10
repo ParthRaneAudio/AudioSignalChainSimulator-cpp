@@ -21,9 +21,15 @@
     <ClCompile Include="signal_chain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="audio_io.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="signal_chain.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audio_io.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
