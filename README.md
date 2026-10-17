@@ -20,7 +20,7 @@ Each stage processes the output of the previous one sample by sample, modelling 
 
 **Compressor** : Reduces dynamic range of samples exceeding a threshold, applying a user-defined ratio. Implements the standard gain reduction formula: `threshold + (input - threshold) / ratio`.
 
-**Low Shelf EQ** : Applies a flat gain boost or cut using the dB-to-linear conversion `pow(10.0, gainDb / 20.0)`. Currently a simplified gain model — biquad filter implementation planned.
+**Low Shelf EQ: Implements a biquad second-order IIR low shelf filter using coefficients derived from the Audio EQ Cookbook. Frequency-dependent gain boost or cut with accurate shelf behaviour at the specified corner frequency.
 
 **Limiter** : Hard clips at a user-defined ceiling, handling both positive and negative signal boundaries. Models a brick-wall limiter used to prevent clipping at the output stage.
 
@@ -84,9 +84,9 @@ Limiter threshold:    0.95
 
 ## Roadmap
 
-- Biquad filter implementation to replace simplified EQ gain model
+- Biquad filter implementation to replace simplified EQ gain model: IMPLEMENTED 
 - Attack and release times for the noise gate and compressor
-- Peak analysis reporting — input and output peak levels in dB
+- Peak analysis reporting: input and output peak levels in dB
 - Multi-band processing
 
 ---
@@ -99,5 +99,5 @@ This project is part of a broader self-directed study in C++ and DSP, working to
 
 ## Author
 
-**Parth Rane** — Technical Sound Designer  
+**Parth Rane**: Technical Sound Designer  
 [Portfolio](https://parthraneaudio.github.io/) · [LinkedIn](https://uk.linkedin.com/in/parthraneprofile) · [YouTube](https://www.youtube.com/@ParthRaneAudio) · [GitHub](https://github.com/ParthRaneAudio)
