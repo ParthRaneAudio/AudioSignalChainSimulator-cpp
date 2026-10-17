@@ -20,7 +20,7 @@ Each stage processes the output of the previous one sample by sample, modelling 
 
 **Compressor** : Reduces dynamic range of samples exceeding a threshold, applying a user-defined ratio. Implements the standard gain reduction formula: `threshold + (input - threshold) / ratio`.
 
-**Low Shelf EQ: Implements a biquad second-order IIR low shelf filter using coefficients derived from the Audio EQ Cookbook. Frequency-dependent gain boost or cut with accurate shelf behaviour at the specified corner frequency.
+**Low Shelf EQ**: Implements a biquad second-order IIR low shelf filter using coefficients derived from the Audio EQ Cookbook. Frequency-dependent gain boost or cut with accurate shelf behaviour at the specified corner frequency.
 
 **Limiter** : Hard clips at a user-defined ceiling, handling both positive and negative signal boundaries. Models a brick-wall limiter used to prevent clipping at the output stage.
 
