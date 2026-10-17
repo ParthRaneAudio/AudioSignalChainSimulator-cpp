@@ -6,6 +6,7 @@
 #include "signal_chain.h"
 #include "audio_io.h"
 #include <cstddef>
+#include "biquadEq.h"
 
 
 bool loadWav(const std::string& filePath, std::vector<double>& buffer, SF_INFO& fileInfo)
@@ -39,16 +40,19 @@ bool loadWav(const std::string& filePath, std::vector<double>& buffer, SF_INFO& 
     return true;
 }
 
-void processBuffer(std::vector<double>& buffer, double gateThreshold, double compThreshold, double compRatio, double eqGain, double eqFreq, double limitThreshold)
+void processBuffer(std::vector<double>& buffer, double gateThreshold, double compThreshold, double compRatio, double eqGain, double eqFreq, double limitThreshold, int sampleRate)
 {
-	for (std::size_t i{ 0 }; i < buffer.size(); ++i)
-	{
-		buffer[i] = applyNoiseGate(buffer[i], gateThreshold);
-		buffer[i] = applyCompressor(buffer[i], compThreshold, compRatio);
-		buffer[i] = applyLowShelfEQ(buffer[i], eqGain, eqFreq);
-		buffer[i] = applyLimiter(buffer[i], limitThreshold);
-	}
+    // Create and calculate the filter once before the loop
+    BiquadFilter eqFilter;
+    calculateLowShelf(eqFilter, eqGain, eqFreq, sampleRate);
 
+    for (std::size_t i{ 0 }; i < buffer.size(); ++i)
+    {
+        buffer[i] = applyNoiseGate(buffer[i], gateThreshold);
+        buffer[i] = applyCompressor(buffer[i], compThreshold, compRatio);
+        buffer[i] = processSample(eqFilter, buffer[i]);  // replaces applyLowShelfEQ
+        buffer[i] = applyLimiter(buffer[i], limitThreshold);
+    }
 }
 
 bool saveWav(const std::string& filePath, std::vector<double>& buffer, SF_INFO& fileInfo)

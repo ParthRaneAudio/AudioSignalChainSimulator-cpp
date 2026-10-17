@@ -3,6 +3,7 @@
 #ifndef SIGNAL_CHAIN_H
 #define SIGNAL_CHAIN_H
 #include <string_view>
+#include "biquadEq.h"
 
 //constexpr variables for signal processing
 constexpr double maxSignalLevel{ 1.0 };

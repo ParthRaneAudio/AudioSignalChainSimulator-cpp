@@ -12,6 +12,7 @@
 
 int main()
 {
+	//Asking the user for input and output file paths
 	std::string inputFilePath; // User input for the audio file path
 	std::cout << "Enter the path to the audio file: " << "\n";
 	std::getline(std::cin >> std::ws, inputFilePath);
@@ -20,7 +21,8 @@ int main()
 	std::cout << "Enter the path for the output audio file: " << "\n";
 	std::getline(std::cin >> std::ws, outputFilePath);
 
-	//Signal Chain Parameters
+
+	//Asking the user for signal processing parameters
 	double gateThreshold_User{}; // User input for the noise gate threshold
 	std::cout << "Enter the gate threshold: " << "\n";
 	std::cin >> gateThreshold_User;
@@ -55,7 +57,7 @@ int main()
 	std::cout << "Enter the limiter threshold: " << "\n";
 	std::cin >> limiterThreshold_User;
 
-	//Load WAV file
+	//Loading WAV file
 	SF_INFO fileInfo{};
 	std::vector<double> buffer;
 
@@ -71,7 +73,7 @@ int main()
 
 	// Process buffer through signal chain
 	std::cout << "Processing " << buffer.size() << " samples..." << "\n";
-	processBuffer(buffer, gateThreshold_User, compressorThreshold_User, compressorRatio_User, eqGain_User, eqFrequency_User, limiterThreshold_User);
+	processBuffer(buffer, gateThreshold_User, compressorThreshold_User, compressorRatio_User, eqGain_User, eqFrequency_User, limiterThreshold_User, fileInfo.samplerate);
 
 	// Save output WAV
 	if (!saveWav(outputFilePath, buffer, fileInfo))
@@ -86,3 +88,4 @@ int main()
 }
 
 
+  

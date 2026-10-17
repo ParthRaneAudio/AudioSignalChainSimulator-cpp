@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="AudioSignalChainSimulator.cpp" />
     <ClCompile Include="audio_io.cpp" />
+    <ClCompile Include="biquadEq.cpp" />
     <ClCompile Include="signal_chain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audio_io.h" />
+    <ClInclude Include="biquadEq.h" />
     <ClInclude Include="signal_chain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
